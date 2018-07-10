@@ -1,9 +1,9 @@
 import React from 'react'
-import { Route, Link } from 'react-router-dom'
+//import { Route, Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 
-import BookItem from './components/BookItem'
+//import BookItem from './components/BookItem'
 import BookSearch from './components/BookSearch'
 import BookShelf from './components/BookShelf'
 
@@ -39,13 +39,16 @@ class BooksApp extends React.Component {
     this.getAllBooks()
   }
 
+  updateShelf(book, shelf) {
+    BooksAPI.update(book, shelf)
+  }
+
 
   render() {
     const { screen, allBooks, listShelves } = this.state;
 
     return (
       <div className="app">
-
         {screen === 'list' && (
           <div className="list-books">
             <div className="list-books-title">
@@ -59,6 +62,7 @@ class BooksApp extends React.Component {
                       key={shelf.id}
                       shelfName={shelf.name}
                       allBooks={allBooks}
+                      updateShelf={this.updateShelf}
                     />
                   )
                 })}
@@ -74,6 +78,7 @@ class BooksApp extends React.Component {
         {screen === 'search' && (
           <BookSearch
             allBooks={allBooks}
+            updateShelf={this.updateShelf}
           />
         )}
       </div>
