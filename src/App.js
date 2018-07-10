@@ -10,19 +10,25 @@ import BookShelf from './components/BookShelf'
 
 class BooksApp extends React.Component {
   state = {
-    //showSearchPage: false,
     screen: 'list',
+
     allBooks: [],
-    listShelves: ['Currently Reading', 'Want to Read', 'Read']
+
+    listShelves: [ 
+      {id: 1,
+        name: 'Currently Reading'},
+      {id: 2,
+        name: 'Want to Read'},
+      {id: 3,
+        name: 'Read'}
+    ]
 
   }
 
   //method getAll from BooksAPI: import all books from API server
   getAllBooks = () => {
     BooksAPI.getAll().then(books => (
-      this.setState({allBooks: books}),
-      console.log('allBooks in getallbooks:'),
-      console.log(books)
+      this.setState({allBooks: books})
     ))
   }
 
@@ -35,24 +41,24 @@ class BooksApp extends React.Component {
 
 
   render() {
-    console.log('allBooks in render:')
-    console.log(this.state.allBooks)
+    const { screen, allBooks, listShelves } = this.state;
 
     return (
       <div className="app">
 
-        {this.state.screen === 'list' && (
+        {screen === 'list' && (
           <div className="list-books">
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
               <div>
-                {this.state.listShelves.map(shelf => {
+                {listShelves.map(shelf => {
                   return(
                     <BookShelf
-                      name={shelf}
-                      allBooks={this.state.allBooks}
+                      key={shelf.id}
+                      shelfName={shelf.name}
+                      allBooks={allBooks}
                     />
                   )
                 })}
@@ -65,9 +71,9 @@ class BooksApp extends React.Component {
           </div>
         )}
 
-        {this.state.screen === 'search' && (
+        {screen === 'search' && (
           <BookSearch
-            allBooks={this.state.allBooks}
+            allBooks={allBooks}
           />
         )}
       </div>

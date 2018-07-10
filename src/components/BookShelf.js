@@ -9,17 +9,29 @@ class BookShelf extends Component {
 	}
 	
 	render() {
-		const { book } = this.props;
-		const { shelf } = this.state;
+		console.log('Props from bookshelf');
+		console.log(this.props);
+
+		const { shelfName, allBooks } = this.props;
+		//const { shelf } = this.state;
 
 		return (
 			<div className="bookshelf">
-				<h2 className="bookshelf-title">{this.props.name}</h2>
+				<h2 className="bookshelf-title">{shelfName}</h2>
 				<div className="bookshelf-books">
 					<ol className="books-grid">
-						<li>
-							<BookItem/>
-						</li>
+						{allBooks.map(book => {
+							return(
+								<li key={book.id}>
+									<BookItem
+										authors={book.authors}
+										title={book.title}
+										img={book.imageLinks}
+										shelf={book.shelf}
+									/>
+								</li>
+							)
+						})}
 					</ol>
 				</div>
 			</div>

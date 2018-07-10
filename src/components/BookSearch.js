@@ -17,6 +17,10 @@ class BookSearch extends Component {
 	
 	render() {
 		const { query } = this.state;
+		console.log('props in booksearch:')
+		console.log(this.props);
+
+		const { allBooks } = this.props;
 
 		if (query) {
 
@@ -43,7 +47,20 @@ class BookSearch extends Component {
 					</div>
 				</div>
 				<div className="search-books-results">
-					<ol className="books-grid"></ol>
+					<ol className="books-grid">
+						{allBooks.map(book => {
+							return(
+								<li key={book.id}>
+									<BookItem
+										authors={book.authors}
+										title={book.title}
+										img={book.imageLinks}
+										shelf={book.shelf}
+									/>
+								</li>
+							)
+						})}
+					</ol>
 				</div>
 			</div>
 		)
