@@ -4,9 +4,6 @@ import BookItem from './BookItem'
 //import BookSearch from './BookSearch'
 
 class BookShelf extends Component {
-	state = {
-
-	}
 	
 	render() {
 		console.log('Props from bookshelf');
@@ -39,7 +36,5 @@ class BookShelf extends Component {
 		)
 	}
 }
-
-
 
 export default BookShelf;

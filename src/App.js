@@ -10,7 +10,7 @@ import BookShelf from './components/BookShelf'
 
 class BooksApp extends React.Component {
   state = {
-    screen: 'list',
+    screen: 'search',
 
     allBooks: [],
 
@@ -39,10 +39,12 @@ class BooksApp extends React.Component {
     this.getAllBooks()
   }
 
-  updateShelf(book, shelf) {
+  //method update from BooksAPI
+  updateShelf = (book, shelf) => {
     BooksAPI.update(book, shelf)
+    //.then(() => {/* Update the book shelf and application state */})
+    this.getAllBooks
   }
-
 
   render() {
     const { screen, allBooks, listShelves } = this.state;

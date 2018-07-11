@@ -2,29 +2,57 @@ import React, { Component } from 'react';
 //import { Link, Route } from 'react-router-dom';
 import BookItem from './BookItem'
 //import BookShelf from './BookShelf'
+import * as BooksAPI from '../BooksAPI'
+//import escapeRegExp from 'escape-string-regexp'
+
 
 class BookSearch extends Component {
 	state = {
 		query : '',
-
+		displayedBooks: []
 	}
 
-	//metod
-	updateQuery = (query) => {
-		this.setState({ query: query} )
+	// method saves in this.state.query whatever input is (letter by letter)
+	updateQuery = (input) => {
+		this.setState({ query: input})
 	}
+
 	
 	render() {
-		/*console.log('props in booksearch:')
-		console.log(this.props);*/
-
 		const { allBooks, updateShelf } = this.props;
-		const { query } = this.state;
+		const { query, displayedBooks } = this.state;
 
-		if (query) {
+		console.log('Input is: ' + query);
+		
+		// As the user types into the search field, books that match the query are displayed on the page.
+		let matchedBooks = [];
+		if (query !== '') {
+			//call method search from BooksAPI
+			BooksAPI.search(query.trim())
+			.then(displayedBooks => {
+				matchedBooks = displayedBooks
+				this.setState({ displayedBooks: matchedBooks })
+
+				console.log('displayedBooks length is: ' + displayedBooks.length)
+				console.log(displayedBooks)
+
+			})
 
 		}
 
+		// Search results are not shown when all of the text is deleted out of the search input box.
+		// without 'displayedBooks.length', there is error in console
+		if (query === '' && displayedBooks.length) {
+			this.setState({ displayedBooks: [] })
+		}
+		
+/* it doesnt work
+		// Invalid queries are handled and prior search results are not shown.
+		// if input doesn't match any SEARCH_TERMS, show displayedBooks:[]
+		if (query !== '' && displayedBooks.length === 0) {
+			console.log('None book found for inserted input.')
+		}
+*/
 		return (
 			<div className="search-books">
 				<div className="search-books-bar">
@@ -49,7 +77,7 @@ class BookSearch extends Component {
 				</div>
 				<div className="search-books-results">
 					<ol className="books-grid">
-						{allBooks.map(book => {
+						{displayedBooks.map(book => {
 							return(
 								<li key={book.id}>
 									<BookItem
