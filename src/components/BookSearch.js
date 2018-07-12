@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import { Link, Route } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import BookItem from './BookItem'
 //import BookShelf from './BookShelf'
 import * as BooksAPI from '../BooksAPI'
@@ -40,7 +40,7 @@ class BookSearch extends Component {
 		return (
 			<div className="search-books">
 				<div className="search-books-bar">
-					<a className="close-search" onClick={() => this.setState({ screen: 'list' })}>Close</a>
+					<Link className="close-search" to="/">Close</Link>
 					<div className="search-books-input-wrapper">
 						{/*
 							NOTES: The search from BooksAPI is limited to a particular set of search terms.
