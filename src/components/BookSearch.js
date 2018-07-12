@@ -9,50 +9,34 @@ import * as BooksAPI from '../BooksAPI'
 class BookSearch extends Component {
 	state = {
 		query : '',
-		displayedBooks: []
+		matchedBooks: []
 	}
 
-	// method saves in this.state.query whatever input is (letter by letter)
+	// method saves in this.state.query whatever input is (letter by letter) and displays matchedBooks
 	updateQuery = (input) => {
-		this.setState({ query: input})
+		this.setState({ query: input});
+		console.log('Input is: ' + input);
+		
+		// if query is not empty, call method search from BooksAPI
+		if (input) {
+			BooksAPI.search(input).then(matchedBooks => {
+				// if matchedBooks has length ? true (> 0) :  false (= 0)
+				(matchedBooks.length) ? this.setState({ matchedBooks }) : this.setState({ matchedBooks: [] });
+				console.log('matchedBooks length is: ' + matchedBooks.length)
+				console.log(matchedBooks)
+			})
+		// if query is empty
+		} else {
+			this.setState({ matchedBooks: [] });
+		}
 	}
+
 
 	
 	render() {
 		const { allBooks, updateShelf } = this.props;
-		const { query, displayedBooks } = this.state;
+		const { query, matchedBooks } = this.state;
 
-		console.log('Input is: ' + query);
-		
-		// As the user types into the search field, books that match the query are displayed on the page.
-		let matchedBooks = [];
-		if (query !== '') {
-			//call method search from BooksAPI
-			BooksAPI.search(query.trim())
-			.then(displayedBooks => {
-				matchedBooks = displayedBooks
-				this.setState({ displayedBooks: matchedBooks })
-
-				console.log('displayedBooks length is: ' + displayedBooks.length)
-				console.log(displayedBooks)
-
-			})
-
-		}
-
-		// Search results are not shown when all of the text is deleted out of the search input box.
-		// without 'displayedBooks.length', there is error in console
-		if (query === '' && displayedBooks.length) {
-			this.setState({ displayedBooks: [] })
-		}
-		
-/* it doesnt work
-		// Invalid queries are handled and prior search results are not shown.
-		// if input doesn't match any SEARCH_TERMS, show displayedBooks:[]
-		if (query !== '' && displayedBooks.length === 0) {
-			console.log('None book found for inserted input.')
-		}
-*/
 		return (
 			<div className="search-books">
 				<div className="search-books-bar">
@@ -75,26 +59,38 @@ class BookSearch extends Component {
 
 					</div>
 				</div>
+
 				<div className="search-books-results">
-					<ol className="books-grid">
-						{displayedBooks.map(book => {
-							return(
-								<li key={book.id}>
-									<BookItem
-										book={book}
-										updateShelf={updateShelf}
-									/>
-								</li>
-							)
-						})}
-					</ol>
+				{// if there are matchedBooks in array:
+					matchedBooks.length != 0 && (
+						<ol className="books-grid">
+							{matchedBooks.map(book => {
+								return(
+									<li key={book.id}>
+										<BookItem
+											book={book}
+											updateShelf={updateShelf}
+										/>
+									</li>
+								)
+							})}
+						</ol>
+					)
+				}
+				{// if none book matches the input
+					query != '' && matchedBooks.length === 0 && (
+						<h3>Sorry, no book found for your query <i>"{query}"</i>.</h3>
+					)
+				}
+				{// if no input, just blank div
+					query === '' && (<div></div>)
+				}
 				</div>
+
 			</div>
 		)
 	}
 }
-
-
 
 export default BookSearch;
 
