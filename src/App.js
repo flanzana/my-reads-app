@@ -14,10 +14,13 @@ class BooksApp extends React.Component {
 
     listShelves: [ 
       {id: 1,
+        nm: 'currentlyReading',
         name: 'Currently Reading'},
       {id: 2,
+        nm: 'wantToRead',
         name: 'Want to Read'},
       {id: 3,
+        nm: 'read',
         name: 'Read'}
     ]
 
@@ -39,13 +42,14 @@ class BooksApp extends React.Component {
 
   //method update from BooksAPI
   updateShelf = (book, shelf) => {
-    BooksAPI.update(book, shelf)
-    //.then(() => {/* Update the book shelf and application state */})
+    BooksAPI.update(book, shelf).then(() => {/* Update the book shelf and application state */
+      console.log(`Book "${book.title}" has been moved to shelf "${shelf}" (app.js).`)
+    })
     this.getAllBooks
   }
 
   render() {
-    const { screen, allBooks, listShelves } = this.state;
+    const { allBooks, listShelves } = this.state;
 
     return (
       <div className="app">
@@ -61,6 +65,7 @@ class BooksApp extends React.Component {
                   return(
                     <BookShelf
                       key={shelf.id}
+                      shelfNm={shelf.nm}
                       shelfName={shelf.name}
                       allBooks={allBooks}
                       updateShelf={this.updateShelf}

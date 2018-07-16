@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import BookItem from './BookItem'
 //import BookShelf from './BookShelf'
 import * as BooksAPI from '../BooksAPI'
@@ -62,7 +62,7 @@ class BookSearch extends Component {
 
 				<div className="search-books-results">
 				{// if there are matchedBooks in array:
-					matchedBooks.length != 0 && (
+					matchedBooks.length !== 0 && (
 						<ol className="books-grid">
 							{matchedBooks.map(book => {
 								return(
@@ -78,7 +78,8 @@ class BookSearch extends Component {
 					)
 				}
 				{// if none book matches the input
-					query != '' && matchedBooks.length === 0 && (
+					query !== '' && matchedBooks.length === 0 && (
+						// TODO: display this 2 second after input in query is written.
 						<h3>Sorry, no book found for your query <i>"{query}"</i>.</h3>
 					)
 				}

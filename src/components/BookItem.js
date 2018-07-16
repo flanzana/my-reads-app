@@ -10,14 +10,14 @@ class BookItem extends Component {
 
 	changeShelf = (e) => {
 		this.props.updateShelf(this.props.book, e.target.value)
-		console.log('Book ' + this.props.book.title + ' is moved to shelf ' + e.target.value)
+		console.log('Book ' + this.props.book.title + ' is moved to shelf ' + e.target.value + '. (bookitem.js)')
 	}
 
 	render() {
-		/*console.log('Props from bookitem');
-		console.log(this.props);*/
+		//console.log('Props from bookitem');
+		//console.log(this.props);
 
-		const { book , updateShelf } = this.props;
+		const { book } = this.props;
 
 		return (
 			<div className="book">
