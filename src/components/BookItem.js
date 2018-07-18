@@ -19,10 +19,15 @@ class BookItem extends Component {
 
 		const { book } = this.props;
 
+		// The search works correctly when a book does not have a thumbnail. (To test this, try searching for "poetry" and "biography").
+		let img = '';
+		(book.imageLinks) ? (img = book.imageLinks.smallThumbnail) : (img = '');
+
+
 		return (
 			<div className="book">
 				<div className="book-top">
-					<div className="book-cover" style={{ width: 128, height: 192, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
+					<div className="book-cover" style={{ width: 128, height: 192, backgroundImage: `url(${img})` }}></div>
 					<div className="book-shelf-changer">
 						<select
 							value={book.shelf}
