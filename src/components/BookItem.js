@@ -8,20 +8,25 @@ class BookItem extends Component {
 
 	}
 
+	// help: https://reactjs.org/docs/forms.html#the-select-tag
 	changeShelf = (e) => {
-		this.props.updateShelf(this.props.book, e.target.value)
-		console.log('Book ' + this.props.book.title + ' is moved to shelf ' + e.target.value + '. (bookitem.js)')
+		const { book, updateShelf } = this.props;
+		updateShelf(book, e.target.value);
+		console.log('Book ' + book.title + ' is moved to shelf ' + e.target.value + '. (bookitem.js)');
 	}
 
 	render() {
 		//console.log('Props from bookitem');
 		//console.log(this.props);
 
-		const { book } = this.props;
+		const { book, matchedBooks, allBooks } = this.props;
 
 		// The search works correctly when a book does not have a thumbnail. (To test this, try searching for "poetry" and "biography").
 		let img = '';
 		(book.imageLinks) ? (img = book.imageLinks.smallThumbnail) : (img = '');
+
+		// if book doesn't have attribute book.shelf, then put it by default to 'none'
+		(book.shelf) ? (book.shelf = book.shelf) : (book.shelf = 'none');
 
 
 		return (
@@ -33,7 +38,7 @@ class BookItem extends Component {
 							value={book.shelf}
 							onChange={this.changeShelf}
 						>
-							<option value="move" disabled>Move to...</option>
+							<option value="move" disabled defaultValue="none">Move to...</option>
 							<option value="currentlyReading">Currently Reading</option>
 							<option value="wantToRead">Want to Read</option>
 							<option value="read">Read</option>

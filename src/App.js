@@ -10,6 +10,7 @@ import BookShelf from './components/BookShelf'
 
 class BooksApp extends React.Component {
   state = {
+    //allBooks are all books that are displayed on shelves currently reading, want to read and read
     allBooks: [],
 
     listShelves: [ 
@@ -45,11 +46,14 @@ class BooksApp extends React.Component {
     BooksAPI.update(book, shelf).then(() => {/* Update the book shelf and application state */
       console.log(`Book "${book.title}" has been moved to shelf "${shelf}" (app.js).`)
     })
-    this.getAllBooks
+    //this.getAllBooks
   }
 
   render() {
     const { allBooks, listShelves } = this.state;
+    
+    console.log('number of allBooks on shelves is ' + allBooks.length)
+    console.log(allBooks);
 
     return (
       <div className="app">

@@ -27,6 +27,7 @@ class BookShelf extends Component {
 									<li key={book.id}>
 										<BookItem
 											book={book}
+											allBooks={allBooks}
 											updateShelf={updateShelf}
 										/>
 									</li>

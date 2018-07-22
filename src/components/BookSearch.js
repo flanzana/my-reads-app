@@ -15,20 +15,20 @@ class BookSearch extends Component {
 	// method saves in this.state.query whatever input is (letter by letter) and displays matchedBooks
 	updateQuery = (input) => {
 		this.setState({ query: input});
-		console.log('Input is: ' + input);
+		//console.log('Input is: ' + input);
 		
 		// if query is not empty, call method search from BooksAPI
 		if (input) {
 			BooksAPI.search(input).then(matchedBooks => {
 				// if matchedBooks has length ? true (> 0) :  false (= 0)
 				(matchedBooks.length) ? this.setState({ matchedBooks }) : this.setState({ matchedBooks: [] });
-				console.log('matchedBooks length is: ' + matchedBooks.length)
-				console.log(matchedBooks)
 			})
 		// if query is empty
 		} else {
 			this.setState({ matchedBooks: [] });
 		}
+
+
 	}
 
 
@@ -36,6 +36,27 @@ class BookSearch extends Component {
 	render() {
 		const { allBooks, updateShelf } = this.props;
 		const { query, matchedBooks } = this.state;
+
+		console.log('number of matchedBooks is ' + matchedBooks.length)
+		//console.log(matchedBooks)
+
+
+		/* If a book is assigned to a shelf on the main page and that book appears on the search page, 
+			the correct shelf should be selected on the search page.*/
+		// compare allBooks and matchedBooks
+		//help https://codeburst.io/comparison-of-two-arrays-using-javascript-3251d03877fe
+		if (matchedBooks.length > 0) {
+			matchedBooks.forEach((b1) => allBooks.forEach((b2) => {
+					if (b1.id === b2.id) {
+						b1.shelf = b2.shelf;
+						console.log(b1.id +' vs '+ b2.id);
+						console.log(matchedBooks);
+					}
+				})
+			);
+			console.log(matchedBooks);
+		}
+
 
 		return (
 			<div className="search-books">
@@ -69,7 +90,9 @@ class BookSearch extends Component {
 									<li key={book.id}>
 										<BookItem
 											book={book}
+											allBooks={allBooks}
 											updateShelf={updateShelf}
+											matchedBooks={matchedBooks}
 										/>
 									</li>
 								)
