@@ -16,7 +16,7 @@ class BookItem extends Component {
 		//console.log('Props from bookitem');
 		//console.log(this.props);
 
-		const { book, matchedBooks, allBooks } = this.props;
+		const { book } = this.props;
 
 		// The search works correctly when a book does not have a thumbnail. (To test this, try searching for "poetry" and "biography").
 		let img = '';

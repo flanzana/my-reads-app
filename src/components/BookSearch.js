@@ -46,8 +46,8 @@ class BookSearch extends Component {
 					}
 				})
 			);
-			console.log('number of matchedBooks is ' + matchedBooks.length)
-			console.log(matchedBooks);
+			//console.log('number of matchedBooks is ' + matchedBooks.length)
+			//console.log(matchedBooks);
 		}
 
 

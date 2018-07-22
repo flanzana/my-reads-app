@@ -36,9 +36,6 @@ class BooksApp extends React.Component {
 
 	componentDidMount() {
 		this.getAllBooks()
-
-		console.log('number of allBooks on shelves is ' + this.state.allBooks.length)
-		console.log(this.state.allBooks);
 	}
 
 // this function will update allBooks (when change is made)
@@ -49,12 +46,16 @@ class BooksApp extends React.Component {
 	//method update from BooksAPI
 	updateShelf = (book, shelf) => {
 		BooksAPI.update(book, shelf);
+		
 		console.log(`Book "${book.title}" has been moved to shelf "${shelf}" (app.js).`);
 	}
 
 
 	render() {
 		const { allBooks, listShelves } = this.state;
+
+		//console.log('number of allBooks on shelves is ' + this.state.allBooks.length);
+		//console.log(this.state.allBooks);
 
 		return (
 			<div className="app">
