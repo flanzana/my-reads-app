@@ -36,21 +36,25 @@ class BooksApp extends React.Component {
 
 	componentDidMount() {
 		this.getAllBooks()
+
+		console.log('number of allBooks on shelves is ' + this.state.allBooks.length)
+		console.log(this.state.allBooks);
+	}
+
+// this function will update allBooks (when change is made)
+	componentDidUpdate() {
+		this.getAllBooks()   
 	}
 
 	//method update from BooksAPI
 	updateShelf = (book, shelf) => {
-		BooksAPI.update(book, shelf).then(() => {
-			console.log(`Book "${book.title}" has been moved to shelf "${shelf}" (app.js).`)
-		})
+		BooksAPI.update(book, shelf);
+		console.log(`Book "${book.title}" has been moved to shelf "${shelf}" (app.js).`);
 	}
 
 
 	render() {
 		const { allBooks, listShelves } = this.state;
-
-		console.log('number of allBooks on shelves is ' + allBooks.length)
-		console.log(allBooks);
 
 		return (
 			<div className="app">
