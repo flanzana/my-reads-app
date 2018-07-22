@@ -4,15 +4,12 @@ import React, { Component } from 'react';
 //import BookShelf from './BookShelf'
 
 class BookItem extends Component {
-	state = {
-
-	}
 
 	// help: https://reactjs.org/docs/forms.html#the-select-tag
 	changeShelf = (e) => {
 		const { book, updateShelf } = this.props;
 		updateShelf(book, e.target.value);
-		console.log('Book ' + book.title + ' is moved to shelf ' + e.target.value + '. (bookitem.js)');
+		//console.log('Book ' + book.title + ' is moved to shelf ' + e.target.value + '. (bookitem.js)');
 	}
 
 	render() {
@@ -52,6 +49,5 @@ class BookItem extends Component {
 		)
 	}
 }
-
 
 export default BookItem;
